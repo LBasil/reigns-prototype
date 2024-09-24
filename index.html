@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reigns Prototype</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6">
+                <div id="game" class="d-flex justify-content-center align-items-center">
+                    <div id="card" class="card p-3">
+                    <h3 id="question">Question 1</h3>
+                    <p id="swipe-instruction">Swipe à droite pour accepter, à gauche pour refuser.</p>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="recap" class="d-none text-center mt-5">
+            <h3>Résumé des décisions</h3>
+            <ul id="decisions-list"></ul>
+            <h4>Résultats :</h4>
+            <p id="results"></p>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>
