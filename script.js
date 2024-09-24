@@ -62,29 +62,49 @@ const recapElement = document.getElementById('recap');
 const gameElement = document.getElementById('game');
 const resultsElement = document.getElementById('results');
 
-function updateScores(question, decision) {
-const modifier = decision === 'Accepté' ? 1 : -1;
-scores.money += modifier * question.money;
-scores.army += modifier * question.army;
-scores.agriculture += modifier * question.agriculture;
-scores.love += modifier * question.love;
-scores.health += modifier * question.health;
+// Progress bars
+const moneyBar = document.getElementById('money-bar');
+const armyBar = document.getElementById('army-bar');
+const agricultureBar = document.getElementById('agriculture-bar');
+const loveBar = document.getElementById('love-bar');
+const healthBar = document.getElementById('health-bar');
 
-checkForGameOver();
+function updateScores(question, decision) {
+    const modifier = decision === 'Accepté' ? 1 : -1;
+    scores.money += modifier * question.money;
+    scores.army += modifier * question.army;
+    scores.agriculture += modifier * question.agriculture;
+    scores.love += modifier * question.love;
+    scores.health += modifier * question.health;
+
+    // Update the progress bars dynamically
+    updateProgressBar(moneyBar, scores.money);
+    updateProgressBar(armyBar, scores.army);
+    updateProgressBar(agricultureBar, scores.agriculture);
+    updateProgressBar(loveBar, scores.love);
+    updateProgressBar(healthBar, scores.health);
+
+    checkForGameOver();
+}
+
+function updateProgressBar(bar, score) {
+    const percentage = ((score + 10) / 20) * 100; // Convert score from -10..10 to 0..100%
+    bar.style.width = `${percentage}%`;
+    bar.setAttribute('aria-valuenow', score);
 }
 
 function checkForGameOver() {
-if (scores.money <= -10) {
-    endGame("Votre royaume est en faillite.");
-} else if (scores.army <= -10) {
-    endGame("Votre armée a été décimée.");
-} else if (scores.agriculture <= -10) {
-    endGame("L'agriculture a échoué, et la famine s'est installée.");
-} else if (scores.love <= -10) {
-    endGame("Votre peuple vous déteste et s'est révolté.");
-} else if (scores.health <= -10) {
-    endGame("Une maladie a ravagé votre village.");
-}
+    if (scores.money <= -10) {
+        endGame("Votre royaume est en faillite.");
+    } else if (scores.army <= -10) {
+        endGame("Votre armée a été décimée.");
+    } else if (scores.agriculture <= -10) {
+        endGame("L'agriculture a échoué, et la famine s'est installée.");
+    } else if (scores.love <= -10) {
+        endGame("Votre peuple vous déteste et s'est révolté.");
+    } else if (scores.health <= -10) {
+        endGame("Une maladie a ravagé votre village.");
+    }
 }
 
 function endGame(reason) {
@@ -112,17 +132,6 @@ function showNextQuestion() {
     } else {
         showRecap();
     }
-}
-
-function showRecap() {
-    recapElement.classList.remove('d-none');
-    gameElement.classList.add('d-none');
-    decisions.forEach((decision, index) => {
-        const li = document.createElement('li');
-        li.textContent = `${questions[index].text}: ${decision}`;
-        decisionsList.appendChild(li);
-    });
-    resultsElement.textContent = `Argent: ${scores.money}, Armée: ${scores.army}, Agriculture: ${scores.agriculture}, Amour: ${scores.love}, Santé: ${scores.health}`;
 }
 
 function handleSwipe(direction) {
@@ -190,3 +199,4 @@ card.addEventListener('touchend', (event) => {
 });
 
 showNextQuestion();
+
