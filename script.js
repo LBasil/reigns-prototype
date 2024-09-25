@@ -93,6 +93,7 @@ function updateProgressBar(bar, score) {
     bar.setAttribute('aria-valuenow', score);
 }
 
+// Fonction pour vérifier si le joueur a gagné
 function checkForGameOver() {
     if (scores.money <= -10) {
         endGame("Votre royaume est en faillite.");
@@ -104,9 +105,16 @@ function checkForGameOver() {
         endGame("Votre peuple vous déteste et s'est révolté.");
     } else if (scores.health <= -10) {
         endGame("Une maladie a ravagé votre village.");
+    } else if (currentQuestionIndex >= questions.length) {
+        endGame("Félicitations ! Vous avez géré votre royaume avec succès.");
     }
 }
 
+function replayGame() {
+    window.location.reload();
+}
+
+// Mise à jour de la fonction endGame pour afficher le message
 function endGame(reason) {
     recapElement.classList.remove('d-none');
     gameElement.classList.add('d-none');
@@ -117,9 +125,13 @@ function endGame(reason) {
         decisionsList.appendChild(li);
     });
     resultsElement.textContent = `Argent: ${scores.money}, Armée: ${scores.army}, Agriculture: ${scores.agriculture}, Amour: ${scores.love}, Santé: ${scores.health}`;
+    
+    // Ajout du message de perte ou de victoire
     const reasonElement = document.createElement('p');
-    reasonElement.textContent = `Vous avez perdu : ${reason}`;
+    reasonElement.textContent = `Vous avez ${reason.includes("Félicitations") ? "gagné" : "perdu"} : ${reason}`;
     recapElement.appendChild(reasonElement);
+    const replay = document.getElementById('replay');
+    replay.classList.remove('hidden');
 }
 
 function showNextQuestion() {
@@ -130,7 +142,7 @@ function showNextQuestion() {
         card.style.transform = 'translateX(0)';
         card.style.opacity = '1';
     } else {
-        showRecap();
+        checkForGameOver();
     }
 }
 

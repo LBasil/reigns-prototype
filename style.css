@@ -36,3 +36,13 @@ body {
 #recap {
     color: #333;
 }
+
+.replay {
+    display: flex;
+    justify-content: center;
+}
+
+.hidden {
+    display: none;
+}
+
