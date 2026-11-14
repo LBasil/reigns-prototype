@@ -14,4 +14,12 @@ Ouvrir `index.html` dans un navigateur.
 - `script.js` : gestion du geste et des cartes
 - `style.css` : styles
 
+## Tests
+
+```bash
+npm test
+```
+
+Les tests lisent le tableau `questions` de `script.js` et vérifient que chaque question a un effet entier et borné sur les cinq jauges, qu'il n'y a pas de doublon et qu'aucune jauge ne va toujours dans le même sens.
+
 Démo : https://reigns-prototype.vercel.app/
